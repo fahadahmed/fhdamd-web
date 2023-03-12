@@ -1,32 +1,59 @@
+import { gql } from "@apollo/client";
+import type { LoaderArgs } from "@remix-run/node";
+import { json } from "@remix-run/node";
+import { useLoaderData, Link } from "@remix-run/react";
+import graphqlClient from "~/api/client";
+
+export const loader = async ({ request }: LoaderArgs) => {
+  const getLatestIssue = gql`
+    query {
+      issues (filters: { latest: { eq: true }}) {
+        data {
+          id
+          attributes {
+            name
+            number
+            description
+            posts {
+              data {
+                id
+                attributes {
+                  title
+                  summary
+                  slug
+                  tags {
+                    data {
+                      id
+                      attributes {
+                        title
+                        slug
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  `;
+  const res = await graphqlClient(request).query({ query: getLatestIssue });
+
+  return json({ latestIssue: res.data.issues.data[0] });
+}
 export default function Index() {
+  const { latestIssue } = useLoaderData();
+  const posts = latestIssue.attributes.posts.data;
   return (
     <div style={{ fontFamily: "system-ui, sans-serif", lineHeight: "1.4" }}>
-      <h1>Welcome to Remix</h1>
-      <ul>
-        <li>
-          <a
-            target="_blank"
-            href="https://remix.run/tutorials/blog"
-            rel="noreferrer"
-          >
-            15m Quickstart Blog Tutorial
-          </a>
-        </li>
-        <li>
-          <a
-            target="_blank"
-            href="https://remix.run/tutorials/jokes"
-            rel="noreferrer"
-          >
-            Deep Dive Jokes App Tutorial
-          </a>
-        </li>
-        <li>
-          <a target="_blank" href="https://remix.run/docs" rel="noreferrer">
-            Remix Docs
-          </a>
-        </li>
-      </ul>
+      <h1>{latestIssue.attributes.name}</h1>
+      {posts.map((post: any) => (
+        <Link key={post.id} to={`${post.attributes.slug}`}>
+          <h3>{post.attributes.title}</h3>
+          <p>{post.attributes.summary}</p>
+        </Link>
+      ))}
     </div>
   );
 }
