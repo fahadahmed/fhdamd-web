@@ -1,0 +1,20 @@
+body {
+  background-color: #FBFCF7;
+  padding: 0;
+  margin: 0;
+}
+
+.issue-container {
+  display: grid;
+  grid-template-rows: 100px 1fr;
+}
+
+.issue-title {
+  display: grid;
+  justify-content: center;
+  align-items: center;
+  h1 {
+    font-size: 1rem;
+    text-transform: uppercase;
+  }
+}

@@ -4,3 +4,8 @@ node_modules
 /build
 /public/build
 .env
+
+*.css
+*.css.map
+
+.DS_Store

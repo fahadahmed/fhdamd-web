@@ -6,8 +6,8 @@ import { useLoaderData } from "@remix-run/react";
 import graphqlClient from "~/api/client";
 
 export const loader = async ({ params, request }: LoaderArgs) => {
-  const { id } = params;
-  console.log(id)
+  const { slug } = params;
+  console.log(slug)
   const getPost = gql`
     query ($slug: String) {
       posts (filters: { slug: { eq: $slug }}) {
@@ -33,7 +33,7 @@ export const loader = async ({ params, request }: LoaderArgs) => {
 
   const res = await graphqlClient(request).query({
     query: getPost, variables: {
-      slug: id
+      slug
     }
   });
 
@@ -46,7 +46,7 @@ export default function Index() {
   const { post } = useLoaderData();
 
   return (
-    <div style={{ fontFamily: "system-ui, sans-serif", lineHeight: "1.4" }}>
+    <div style={{ fontFamily: "system-ui, sans-serif", lineHeight: "1.4", width: "100%" }}>
       <h1>{post.attributes.title}</h1>
       <div dangerouslySetInnerHTML={{ __html: marked(post.attributes.content) }} />
     </div>
