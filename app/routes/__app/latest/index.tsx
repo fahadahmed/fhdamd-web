@@ -51,12 +51,14 @@ export default function LatestIssue() {
       <div className="issue-title">
         <h1>{latestIssue.attributes.name}</h1>
       </div>
-      <div>
+      <div className="posts-container" style={{ grid: "'A1 A1 A4''A1 A1 A5''A2 A3 A6'" }}>
         {posts.map((post: any) => (
-          <Link key={post.id} to={`/${post.attributes.slug}`}>
-            <h3>{post.attributes.title}</h3>
-            <p>{post.attributes.summary}</p>
-          </Link>
+          <div key={post.id} className="post" style={{ gridArea: `A${post.id}` }}>
+            <Link key={post.id} to={`/${post.attributes.slug}`}>
+              <h3>{post.attributes.title}</h3>
+              <p>{post.attributes.summary}</p>
+            </Link>
+          </div>
         ))}
       </div>
     </div>
