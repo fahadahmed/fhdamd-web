@@ -6,7 +6,7 @@ body {
 
 .issue-container {
   display: grid;
-  grid-template-rows: 100px 1fr;
+  grid-template-rows: 60px 1fr;
 }
 
 .issue-title {
@@ -34,4 +34,9 @@ body {
   &:hover {
     box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
   }
+}
+
+hr {
+  border: none;
+  border-top: 1px solid #eee;
 }
