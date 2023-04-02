@@ -1,10 +1,15 @@
 import { gql } from "@apollo/client";
 import { marked } from 'marked';
-import type { LoaderArgs } from "@remix-run/node";
+import type { LinksFunction, LoaderArgs } from "@remix-run/node";
 import { json } from "@remix-run/node";
 import { useLoaderData } from "@remix-run/react";
 import graphqlClient from "~/api/client";
+import Tag from "~/components/Tag";
+import { tagLinks } from "~/components/Tag/Tag";
 
+export const links: LinksFunction = () => {
+  return [...tagLinks()]
+}
 export const loader = async ({ params, request }: LoaderArgs) => {
   const { slug } = params;
   console.log(slug)
@@ -44,11 +49,32 @@ export const loader = async ({ params, request }: LoaderArgs) => {
 }
 export default function Index() {
   const { post } = useLoaderData();
-
+  const tags = post.attributes.tags.data;
+  console.log(post)
   return (
-    <div style={{ fontFamily: "system-ui, sans-serif", lineHeight: "1.4", width: "100%" }}>
-      <h1>{post.attributes.title}</h1>
-      <div dangerouslySetInnerHTML={{ __html: marked(post.attributes.content) }} />
+    <div style={{ display: 'grid', gridTemplateColumns: '8fr 4fr', gap: '1rem', padding: '2rem', overflowY: 'scroll' }}>
+      <div style={{ fontFamily: "system-ui, sans-serif", lineHeight: "1.4", width: "100%", maxWidth: "960px", marginTop: '4rem', background: "#fff", padding: "1rem" }}>
+        <h1>{post.attributes.title}</h1>
+        <div dangerouslySetInnerHTML={{ __html: marked(post.attributes.content) }} />
+      </div>
+      <div style={{ fontFamily: "system-ui, sans-serif", lineHeight: "1.4", width: "100%", marginTop: '4rem' }}>
+        <div>
+          <h4>Table of Contents</h4>
+        </div>
+        <hr />
+        <div>
+          <h4>Categories</h4>
+          {tags.map((tag: any, index: number) => <Tag key={index} tag={tag} />)}
+        </div>
+        <hr />
+        <div>
+          <h4>More from this issue</h4>
+        </div>
+        <hr />
+        <div>
+          <h4>Share at Socials</h4>
+        </div>
+      </div>
     </div>
   )
 }

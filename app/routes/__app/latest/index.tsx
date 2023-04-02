@@ -21,6 +21,7 @@ export const loader = async ({ request }: LoaderArgs) => {
                   title
                   summary
                   slug
+                  Order
                   tags {
                     data {
                       id
@@ -51,9 +52,9 @@ export default function LatestIssue() {
       <div className="issue-title">
         <h1>{latestIssue.attributes.name}</h1>
       </div>
-      <div className="posts-container" style={{ grid: "'A1 A1 A4''A1 A1 A5''A2 A3 A6'" }}>
+      <div className="posts-container" style={{ grid: latestIssue.attributes.description }}>
         {posts.map((post: any) => (
-          <div key={post.id} className="post" style={{ gridArea: `A${post.id}` }}>
+          <div key={post.id} className="post" style={{ gridArea: `A${post.attributes.Order}` }}>
             <Link key={post.id} to={`/${post.attributes.slug}`}>
               <h3>{post.attributes.title}</h3>
               <p>{post.attributes.summary}</p>
