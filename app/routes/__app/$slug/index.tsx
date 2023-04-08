@@ -52,8 +52,8 @@ export default function Index() {
   const tags = post.attributes.tags.data;
   console.log(post)
   return (
-    <div style={{ display: 'grid', gridTemplateColumns: '8fr 4fr', gap: '1rem', padding: '2rem', overflowY: 'scroll' }}>
-      <div style={{ fontFamily: "system-ui, sans-serif", lineHeight: "1.4", width: "100%", maxWidth: "960px", marginTop: '4rem', background: "#fff", padding: "1rem" }}>
+    <div style={{ display: 'grid', gridTemplateColumns: '8fr 4fr', gap: '2rem', padding: '2rem', overflowY: 'scroll' }}>
+      <div style={{ fontFamily: "system-ui, sans-serif", lineHeight: "1.4", marginTop: '4rem', background: "#fff", padding: "1rem" }}>
         <h1>{post.attributes.title}</h1>
         <div dangerouslySetInnerHTML={{ __html: marked(post.attributes.content) }} />
       </div>
