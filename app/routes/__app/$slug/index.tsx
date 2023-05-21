@@ -22,6 +22,14 @@ export const loader = async ({ params, request }: LoaderArgs) => {
             title
             summary
             content
+            coverImage {
+              data {
+                id
+                attributes {
+                  url
+                }
+              }
+            }
             tags {
               data {
                 attributes {
@@ -41,10 +49,6 @@ export const loader = async ({ params, request }: LoaderArgs) => {
       slug
     }
   });
-
-  console.log(res.data.posts.data[0])
-
-
   return json({ post: res.data.posts.data[0] });
 }
 export default function Index() {
@@ -53,9 +57,13 @@ export default function Index() {
   console.log(post)
   return (
     <div style={{ display: 'grid', gridTemplateColumns: '8fr 4fr', gap: '2rem', padding: '2rem', overflowY: 'scroll' }}>
-      <div style={{ fontFamily: "system-ui, sans-serif", lineHeight: "1.4", marginTop: '4rem', background: "#fff", padding: "1rem" }}>
-        <h1>{post.attributes.title}</h1>
-        <div dangerouslySetInnerHTML={{ __html: marked(post.attributes.content) }} />
+      <div style={{ fontFamily: "system-ui, sans-serif", lineHeight: "1.4", marginTop: '4rem', background: "#fff" }}>
+        <img src={post.attributes.coverImage.data.attributes.url} alt="" width="100%" />
+        <div style={{ padding: "1rem" }}>
+          <h1>{post.attributes.title}</h1>
+          <div dangerouslySetInnerHTML={{ __html: marked(post.attributes.content) }} />
+        </div>
+
       </div>
       <div style={{ fontFamily: "system-ui, sans-serif", lineHeight: "1.4", width: "100%", marginTop: '4rem' }}>
         <div>

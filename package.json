@@ -2,7 +2,9 @@
   "private": true,
   "sideEffects": false,
   "scripts": {
-    "build": "remix build",
+    "build": "yarn build:sass & yarn build:app",
+    "build:app": "remix build",
+    "build:sass": "npx sass app/:app/",
     "deploy": "fly deploy --remote-only",
     "dev": "yarn dev:sass & yarn dev:app",
     "dev:sass": "npx sass --watch app/:app/",
