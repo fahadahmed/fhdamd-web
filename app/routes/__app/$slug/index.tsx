@@ -12,7 +12,6 @@ export const links: LinksFunction = () => {
 }
 export const loader = async ({ params, request }: LoaderArgs) => {
   const { slug } = params;
-  console.log(slug)
   const getPost = gql`
     query ($slug: String) {
       posts (filters: { slug: { eq: $slug }}) {
@@ -56,16 +55,16 @@ export default function Index() {
   const tags = post.attributes.tags.data;
   console.log(post)
   return (
-    <div style={{ display: 'grid', gridTemplateColumns: '8fr 4fr', gap: '2rem', padding: '2rem', overflowY: 'scroll' }}>
-      <div style={{ fontFamily: "system-ui, sans-serif", lineHeight: "1.4", marginTop: '4rem', background: "#fff" }}>
-        <img src={post.attributes.coverImage.data.attributes.url} alt="" width="100%" />
-        <div style={{ padding: "1rem" }}>
-          <h1>{post.attributes.title}</h1>
+    <div style={{ display: 'grid', gridTemplateColumns: '8fr 4fr', gap: '1rem', padding: '2rem' }}>
+      <div style={{ fontFamily: "system-ui, sans-serif", lineHeight: "1.4", background: "#fff" }}>
+        <img src={post.attributes.coverImage?.data?.attributes?.url} alt="" width="100%" />
+        <div style={{ padding: "0 1rem 1rem 1rem" }}>
+          <h1 style={{ marginTop: "0" }}>{post.attributes.title}</h1>
           <div dangerouslySetInnerHTML={{ __html: marked(post.attributes.content) }} />
         </div>
 
       </div>
-      <div style={{ fontFamily: "system-ui, sans-serif", lineHeight: "1.4", width: "100%", marginTop: '4rem' }}>
+      <div style={{ fontFamily: "system-ui, sans-serif", lineHeight: "1.4", width: "100%" }}>
         <div>
           <h4>Table of Contents</h4>
         </div>

@@ -19,6 +19,7 @@ export const loader = async ({ request }: LoaderArgs) => {
             name
             number
             description
+            desktopLayout
             posts {
               data {
                 id
@@ -65,7 +66,7 @@ export default function LatestIssue() {
       <div className="issue-title">
         <h1>{latestIssue.attributes.name}</h1>
       </div>
-      <div className="posts-container" style={{ grid: latestIssue.attributes.description }}>
+      <div className="posts-container" style={{ grid: latestIssue.attributes.desktopLayout }}>
         {posts.map((post: any) => (
           // <div key={post.id} className="post" style={{ gridArea: `A${post.attributes.Order}` }}>
           //   <Link key={post.id} to={`/${post.attributes.slug}`}>
